@@ -1,38 +1,38 @@
 class Item {
-  PImage icon;
-  int xPos;
-  int yPos;
-  int xLen;
-  int yLen;
-  
-  // Create new icon with specified svg file
-  Item(String filename, int xPos, int yPos, int xLen, int yLen) {
+  PImage icon;   // image object
+  int x;         // x-coordinate
+  int y;         // y-coordinate
+  int width;     // display width
+  int height;    // display height
+
+  /* Create new icon with specified png file */
+  Item(String filename, int x, int y, int width, int height) {
     icon = loadImage(filename);
-    this.xPos = xPos;
-    this.yPos = yPos;
-    this.xLen = xLen;
-    this.yLen = yLen;
+    this.x = x;
+    this.y = y;
+    this.width = width;
+    this.height = height;
   }
-  
-  // Use default png file
-  Item(int xPos, int yPos, int xLen, int yLen) {
+
+  /* Use default png file */
+  Item(int x, int y, int width, int height) {
     icon = loadImage("test.png");
-    this.xPos = xPos;
-    this.yPos = yPos;
-    this.xLen = xLen;
-    this.yLen = yLen;
+    this.x = x;
+    this.y = y;
+    this.width = width;
+    this.height = height;
   }
-  
-  // Construct item with all default values
+
+  /* Construct item with all default values */
   Item() {
     icon = loadImage("test.png");
-    this.xPos = 100;
-    this.yPos = 100;
-    this.xLen = 100;
-    this.yLen = 100;
+    this.x = 100;
+    this.y = 100;
+    this.width = 100;
+    this.height = 100;
   }
-  
+
   void draw() {
-    image(icon, xPos, yPos, xLen, yLen);
+    image(icon, x, y, width, height);
   }
 }
