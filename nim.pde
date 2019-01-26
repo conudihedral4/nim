@@ -3,7 +3,7 @@ Item i;
 
 void setup() {
   i = new Item();
-  size(1024, 768);
+  size(1200, 900);
   background(0);
   noStroke();
   fill(102);
