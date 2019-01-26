@@ -1,5 +1,5 @@
 class Item {
-  PShape icon;
+  PImage icon;
   int xPos;
   int yPos;
   int xLen;
@@ -7,16 +7,16 @@ class Item {
   
   // Create new icon with specified svg file
   Item(String filename, int xPos, int yPos, int xLen, int yLen) {
-    icon = loadShape(filename);
+    icon = loadImage(filename);
     this.xPos = xPos;
     this.yPos = yPos;
     this.xLen = xLen;
     this.yLen = yLen;
   }
   
-  // Use default svg file
+  // Use default png file
   Item(int xPos, int yPos, int xLen, int yLen) {
-    icon = loadShape("test.svg");
+    icon = loadImage("test.png");
     this.xPos = xPos;
     this.yPos = yPos;
     this.xLen = xLen;
@@ -25,7 +25,7 @@ class Item {
   
   // Construct item with all default values
   Item() {
-    icon = loadShape("test.svg");
+    icon = loadImage("test.png");
     this.xPos = 100;
     this.yPos = 100;
     this.xLen = 100;
@@ -33,6 +33,6 @@ class Item {
   }
   
   void draw() {
-    shape(icon, xPos, yPos, xLen, yLen);
+    image(icon, xPos, yPos, xLen, yLen);
   }
 }
