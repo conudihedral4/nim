@@ -2,4 +2,4 @@
 A game of subtraction
 
 ## Authors
-Rosie Zhao, Ran Tao, Yao Liu, Marcel Goh
+Created with care by Rosie Zhao, Ran Tao, Yao Liu, and Marcel Goh of McGill University for [ConUHacks](https://conuhacks.io) IV.
