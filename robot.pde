@@ -23,6 +23,16 @@ class Robot{
      binGame[l] = binaryArray(input[l]);
     }
     
+    int[] binSum = new int[4];
+    for (int m = 0; m< 4; m++){
+      // that gives me the binary sum array
+    binSum[m] = binarySum(m, binGame);
+    }
+    
+    //find row
+    int row = findRow(binGame, binSum);
+    move[0] = row;
+    
     
     
  
@@ -36,12 +46,48 @@ class Robot{
     return move; 
   }
   
-  int[] binarySum (int[][] rows){
-    int[] sumArray = new int[rows.length];
-    for (int i=0; i< 4;i++){
+  int findRow(int[][] rows, int[] binSum){
+    
+   for (int k=0; k< rows.length; k++){
+     //for every heap k
+     int[] sumK = new int[4];
+     //sumK is the binary sum of heapK and binSum
+     
+   for (int i=0; i<4; i++){
+     //filling in the array for the sum for heapK+binSum
+   sumK[i] = (rows[k][i]+binSum[i])%2;
+   }
+   
+   //binary to integer
+   int intSumK = toInt(sumK);
+   int intBinSum = toInt(binSum);
+   if (intSumK<intBinSum) return k;
+   }
+  }
+   
+   
+ 
+
+  }
+  
+  int toInt(int[] binary){
+    int integer = 0;
+    for (int i=0; i<4, i++){
+      integer += (int)(binary[i]*Math.pow(2,(3-i)));
       
+  }
+  return integer;
+  }
+  
+  int binarySum (int m, int[][] rows){
+    //this method returns either 0 or 1 for each sum
+    int sum = 0;
+    
+    for (int i=0; i<rows.length; i++){
+      sum += rows[i][m];
     }
-    return sumArray;
+    return (sum%2);
+  
   }
   
   int sum(int s, int[][] game){
