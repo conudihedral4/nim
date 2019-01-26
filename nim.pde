@@ -1,8 +1,8 @@
 int x = 0;
-Item i;
+Game g;
 
 void setup() {
-  i = new Item();
+  g = new Game();
   size(1200, 900);
   background(0);
   noStroke();
@@ -10,6 +10,5 @@ void setup() {
 }
 
 void draw() {
-  i.display();
-  x += 1;
+  g.itemMatrix[0][0].display();
 }

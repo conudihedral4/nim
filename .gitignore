@@ -19,3 +19,6 @@
 *.hi
 *.d
 *.s
+
+# Processing #
+*.autosave
