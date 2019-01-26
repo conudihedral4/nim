@@ -18,7 +18,7 @@ class Item {
 
   /* Use default png file */
   Item(int x, int y, int width, int height) {
-    icon = loadImage("test.png");
+    icon = loadImage("donut_full.png");
     this.x = x;
     this.y = y;
     this.width = width;
@@ -28,7 +28,7 @@ class Item {
 
   /* Construct item with all default values */
   Item() {
-    icon = loadImage("test.png");
+    icon = loadImage("donut_full.png");
     this.x = 100;
     this.y = 100;
     this.width = 100;
