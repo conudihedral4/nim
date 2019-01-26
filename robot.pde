@@ -16,10 +16,14 @@ class Robot{
       //copy the heap table to avoid modify it directly
       input[i] = game.table[i];
     }
-    
-    for (){
-      
+    int[][] binGame = new int[input.size][];
+    //a 2D array with first row number, second binary digits
+    for (int l =0; l<input.size; l++){
+      //for all the rows
+     binGame[l] = binaryArray(input[l]);
     }
+    
+    
  
     
     
