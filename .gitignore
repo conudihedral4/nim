@@ -1,0 +1,21 @@
+# Ignore all
+*
+# Unignore all with extensions
+!*.*
+# Unignore all directories
+!*/
+# Unignore Makefile
+!Makefile
+### ALL FILES WITHOUT EXTENSION NOW IGNORED ###
+
+# OS generated files #
+.DS_Store
+*.swp
+*.dSYM
+
+# Compiled source #
+*.out
+*.o
+*.hi
+*.d
+*.s
