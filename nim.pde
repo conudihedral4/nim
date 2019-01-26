@@ -1,4 +1,3 @@
-int x = 0;
 Game g;
 
 void setup() {
@@ -10,7 +9,24 @@ void setup() {
   noLoop();        // game does not automatically loop
 }
 
+void mousePressed() {
+  for (int i=0; i<g.numRows; ++i) {
+    int numItems = g.minItems + i;
+    for (int j=0; j<numItems; ++j) {
+      Item currItem = g.itemMatrix[i][j];
+      if ((mouseX >= currItem.x) && (mouseX < currItem.x + currItem.width) &&
+          (mouseY >= currItem.y) && (mouseY < currItem.y + currItem.height)) {
+        currItem.clicked = true;
+        break;
+      }
+    }
+  }
+  redraw();
+}
+
 void draw() {
+  background(0);
+  println("Redraw: " + hour() + ":" + minute() + ":" + second());
   for (int i=0; i<12; ++i) {
     (new Item(i*100,800,100,100)).display();
   }

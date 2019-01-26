@@ -26,17 +26,9 @@ class Item {
     this.clicked = false;
   }
 
-  /* Construct item with all default values */
-  Item() {
-    icon = loadImage("donut_full.png");
-    this.x = 100;
-    this.y = 100;
-    this.width = 100;
-    this.height = 100;
-    this.clicked = false;
-  }
-
   void display() {
-    image(icon, x, y, width, height);
+    if (!clicked) {
+      image(icon, x, y, width, height);
+    }
   }
 }
