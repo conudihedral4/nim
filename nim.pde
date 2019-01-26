@@ -10,6 +10,6 @@ void setup() {
 }
 
 void draw() {
-  i.draw();
+  i.display();
   x += 1;
 }

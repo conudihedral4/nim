@@ -36,7 +36,7 @@ class Item {
     this.visible = true;
   }
 
-  void draw() {
+  void display() {
     image(icon, x, y, width, height);
   }
 }
