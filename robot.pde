@@ -65,7 +65,7 @@ class Robot {
 
   int toInt(int[] binary) {
     int integer = 0;
-    for (int i=0; i<4, i++) {
+    for (int i=0; i<4; i++) {
       integer += (int)(binary[i]*Math.pow(2, (3-i)));
     }
     return integer;
