@@ -16,7 +16,7 @@ class Item {
   
   // Use default svg file
   Item(int xPos, int yPos, int xLen, int yLen) {
-    icon = loadShape("/media/test.svg");
+    icon = loadShape("test.svg");
     this.xPos = xPos;
     this.yPos = yPos;
     this.xLen = xLen;
@@ -25,7 +25,7 @@ class Item {
   
   // Construct item with all default values
   Item() {
-    icon = loadShape("/media/test.svg");
+    icon = loadShape("test.svg");
     this.xPos = 100;
     this.yPos = 100;
     this.xLen = 100;
