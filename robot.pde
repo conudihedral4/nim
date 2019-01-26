@@ -63,6 +63,7 @@ class Robot{
    int intBinSum = toInt(binSum);
    if (intSumK<intBinSum) return k;
    }
+   return 0; //placeholder
   }
    
    
@@ -72,7 +73,7 @@ class Robot{
   
   int toInt(int[] binary){
     int integer = 0;
-    for (int i=0; i<4, i++){
+    for (int i=0; i<4; i++){
       integer += (int)(binary[i]*Math.pow(2,(3-i)));
       
   }
@@ -121,4 +122,4 @@ class Robot{
   }
   
   return binArray;
-  }}
+  }
