@@ -4,7 +4,7 @@ class Item {
   int y;           // y-coordinate
   int width;       // display width
   int height;      // display height
-  boolean visible; // is item visible?
+  boolean clicked; // has item been clicked?
 
   /* Create new icon with specified png file */
   Item(String filename, int x, int y, int width, int height) {
@@ -13,7 +13,7 @@ class Item {
     this.y = y;
     this.width = width;
     this.height = height;
-    this.visible = true;
+    this.clicked = false;
   }
 
   /* Use default png file */
@@ -23,7 +23,7 @@ class Item {
     this.y = y;
     this.width = width;
     this.height = height;
-    this.visible = true;
+    this.clicked = false;
   }
 
   /* Construct item with all default values */
@@ -33,7 +33,7 @@ class Item {
     this.y = 100;
     this.width = 100;
     this.height = 100;
-    this.visible = true;
+    this.clicked = false;
   }
 
   void display() {
