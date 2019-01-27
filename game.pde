@@ -5,9 +5,12 @@ class Game {
   int numRows;             // number of rows
   int iconDim;             // side-length of a single (square) icon
   Item[][] itemMatrix;     // the items in each row
+  Robot ran;
 
   /* constructs a heap with specified min/max row sizes */
   Game(int minItems, int maxItems) {
+    ran = new Robot();
+
     if (maxItems <= minItems) {
       throw new IllegalArgumentException("Invalid row sizes: HEAP()");
     }
@@ -32,6 +35,21 @@ class Game {
 
     /* fill matrix */
     itemMatrix = createMatrix();
+  }
+
+  /* the computer plays a turn */
+  void cpuNormalMove() {
+    int[] move = ran.normalMove(this);
+    int left = move[1];
+    for (int i=0; i<minItems+move[0]; ++i) {
+      if (!itemMatrix[move[0]][i].clicked) {
+        itemMatrix[move[0]][i].clicked = true;
+        --left;
+      }
+      if (left == 0) {
+        break;
+      }
+    }
   }
 
   /* create and fill matrix with items at correct places */
