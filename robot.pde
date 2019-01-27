@@ -77,14 +77,14 @@ class Robot {
       for (int i=0; i<input.length; i++) {
         if(input[i] != 0){ 
           move[0] = input[i];
-          continue;
+          break;
         }
       }
     }
         //In normal play, the winning strategy is to finish every move with a nim-sum of 0
         return move;
   }
-
+///////////helper methods////////////
     boolean checkZero(int[] sum) {
       for (int i=0; i<4; i++) {
         if (sum[i] == 1) return false;
