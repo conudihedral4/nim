@@ -1,10 +1,11 @@
 # Nim
 A game of subtraction. Learn more about the math behind the game on [Wikipedia](https://en.wikipedia.org/wiki/Nim).  
 
-Created for [ConUHacks](https://conuhacks.io) IV from 26-27 January 2019.
+Created for [ConUHacks](https://conuhacks.io) IV from 26-27 January 2019. See our [Devpost submission](https://devpost.com/software/nim-tgqpkd)
 
 ## Usage
 Open the file `nim.pde` in a Processing window and run the sketch.  
+
 ![menu-screen](/media/menu_screen.png)
 
 Before starting the game, you may wish to change the difficulty or toggle game modes. Do so by clicking the various options on the main menu.
