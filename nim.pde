@@ -10,12 +10,17 @@
 Game g;
 int chosenRow;         // restricts player to a specific row once chosen
 int winLose;           // 1 if player won, -1 if CPU won, 0 otherwise
+int startMin;          // number of items in top row to start
+int startMax;          // number of items in bottom row to start
 boolean menuScreen;    // are we on the menu screen?
 boolean playersTurn;   // is it the player's turn?
 boolean cpuEnabled;    // enable AI player
 boolean misere; // are we playing misere?
 PImage donut;
 PImage select;
+boolean misere;        // are we playing misere?
+boolean soundtrack;    // chopin? 
+boolean lonely;        // singleplayer?
 PImage quit;
 PImage reset;
 PImage confirm;
@@ -31,14 +36,30 @@ PImage one_start;
 PImage two_start;
 PFont titleFont;
 
+import processing.sound.*;
+SoundFile music;
+
+String audioName = "/data/tristesse.wav";
+//needs to be saved int he same folder as .pde file
+String path;
 
 void setup() {
-  /* initialize game variables */
+  /* initialize game variables to defaults */
   chosenRow = -1;
   winLose = 0;
+  startMin = 3;
+  startMax = 5;
   playersTurn = true;
   menuScreen = true;
   misere = true;
+  soundtrack = true;
+   
+  //load sound
+  if (soundtrack){
+  path = sketchPath(audioName);
+  music = new SoundFile(this, path);
+  music.loop();
+  }
 
   /* load images */
   donut = loadImage("donut_full.png");
@@ -69,7 +90,66 @@ void setup() {
 }
 
 void mousePressed() {
-  if (playersTurn && winLose == 0) {
+  if (menuScreen) {
+    /* level 1 */
+    if ((mouseX >= 600) && (mouseX < 0) && (mouseY >= 450) && (mouseY < 0)) {
+      startMin = 3;
+    }
+    /* level 2 */
+    if ((mouseX >= 600) && (mouseX < 0) && (mouseY >= 450) && (mouseY < 0)) {
+      startMin = 5;
+    }
+    /* level 3 */
+    if ((mouseX >= 600) && (mouseX < 0) && (mouseY >= 450) && (mouseY < 0)) {
+      startMin = 7;
+    }
+    /* level 4 */
+    if ((mouseX >= 600) && (mouseX < 0) && (mouseY >= 450) && (mouseY < 0)) {
+      startMin = 11;
+    }
+    /* 3 rows */
+    if ((mouseX >= 600) && (mouseX < 0) && (mouseY >= 450) && (mouseY < 0)) {
+      startMax = startMin + 2;
+    }
+    /* 4 rows */
+    if ((mouseX >= 600) && (mouseX < 0) && (mouseY >= 450) && (mouseY < 0)) {
+      startMax = startMin + 3;
+    }
+    /* 5 rows */
+    if ((mouseX >= 600) && (mouseX < 0) && (mouseY >= 450) && (mouseY < 0)) {
+      startMax = startMin + 4;
+    }
+    /* 6 rows */
+    if ((mouseX >= 600) && (mouseX < 0) && (mouseY >= 450) && (mouseY < 0)) {
+      startMax = startMin + 5;
+    }
+    /* misere on */
+    if ((mouseX >= 600) && (mouseX < 0) && (mouseY >= 450) && (mouseY < 0)) {
+      misere = true;
+    }
+    /* misere off */
+    if ((mouseX >= 600) && (mouseX < 0) && (mouseY >= 450) && (mouseY < 0)) {
+      misere = false;
+    }
+    /* music on */
+    if ((mouseX >= 600) && (mouseX < 0) && (mouseY >= 450) && (mouseY < 0)) {
+      soundtrack = true;
+    }
+    /* music off */
+    if ((mouseX >= 600) && (mouseX < 0) && (mouseY >= 450) && (mouseY < 0)) {
+      soundtrack = false;
+    }
+    /* 1P start */
+    if ((mouseX >= 600) && (mouseX < 0) && (mouseY >= 450) && (mouseY < 0)) {
+      lonely = true;
+    }
+    /* 2P start */
+    if ((mouseX >= 600) && (mouseX < 0) && (mouseY >= 450) && (mouseY < 0)) {
+      lonely = false;
+    }
+    menuScreen = false;
+        
+  } else if (playersTurn && winLose == 0) {
     /* check if any doughnuts are clicked */
     for (int i=0; i<g.numRows; ++i) {
       int numItems = g.minItems + i;
