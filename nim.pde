@@ -53,7 +53,7 @@ void mousePressed() {
       if ((mouseX >= currItem.x) && (mouseX < currItem.x + currItem.width) &&
           (mouseY >= currItem.y) && (mouseY < currItem.y + currItem.height)) {
         if (chosenRow == -1 || chosenRow == i) {
-          currItem.clicked = true;
+          currItem.animate();
           --g.table[i];
           chosenRow = i;
         }
