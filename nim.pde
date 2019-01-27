@@ -13,7 +13,9 @@ int winLose;           // 1 if player won, -1 if CPU won, 0 otherwise
 boolean menuScreen;    // are we on the menu screen?
 boolean playersTurn;   // is it the player's turn?
 boolean cpuEnabled;    // enable AI player
-boolean misere;        // are we playing misere?
+boolean misere; // are we playing misere?
+PImage donut;
+PImage select;
 PImage quit;
 PImage reset;
 PImage confirm;
@@ -25,8 +27,9 @@ PImage canvas;
 PImage win;
 PImage lose;
 PImage confirmNo;
+PImage one_start;
+PImage two_start;
 PFont titleFont;
-PFont menuFont;
 
 
 void setup() {
@@ -34,10 +37,12 @@ void setup() {
   chosenRow = -1;
   winLose = 0;
   playersTurn = true;
-  menuScreen = false;
+  menuScreen = true;
   misere = true;
 
   /* load images */
+  donut = loadImage("donut_full.png");
+  select = loadImage("select.png");
   quit = loadImage("quit.png");
   reset = loadImage("reset.png");
   confirm = loadImage("confirm.png");
@@ -49,6 +54,8 @@ void setup() {
   win = loadImage("win.png");
   lose = loadImage("lose.png");
   confirmNo = loadImage("confirm_no.png");
+  one_start = loadImage("one_p.png");
+  two_start = loadImage("two_p.png");
 
   /* load fonts */
   titleFont = loadFont("MunroSmall-172.vlw");
@@ -121,12 +128,56 @@ void draw() {
   //CURRENTLY BROKEN
   if (menuScreen) {
     fill(255);
-    textAlign(CENTER);
+    textAlign(CENTER, CENTER);
+    //game title
     textFont(titleFont);
-    text("NIM", 300, 125, 400, 150);
-    textFont(menuFont);
-    //text("PUZZLE SIZE:  3  5  7  11", 300, 175, 400, 200);
-    //text("NUMBER OF ROWS:  3  4  5  6", 300, 225, 400, 350);
+    text("NIM", 305, 75);
+    donut.resize(80, 80);
+    image(donut, 60, 40);
+    image(donut, 460, 40);
+    
+    //customization headings
+    textSize(42);
+    text("LEVEL:", 150, 150);
+    text("NUMBER OF ROWS:", 450, 150);
+    text("MISERE MODE:", 150, 250);
+    text("MUSIC:", 450, 250);
+    
+    //level options
+    textSize(50);
+    text("1", 65, 195);
+    text("2", 120, 195);
+    text("3", 175, 195);
+    text("4", 230, 195);
+    
+    //number of row options
+    text("3", 360, 195);
+    text("4", 415, 195);
+    text("5", 470, 195);
+    text("6", 525, 195);
+    
+    //misere mode options
+    text("ON", 90, 295);
+    text("OFF", 190, 295);
+    
+    //music options
+    text("ON", 390, 295);
+    text("OFF", 490, 295);
+    
+    //start buttons
+    image(one_start, 40, 340);
+    image(two_start, 360, 340);
+    
+    //selector default positions
+    select.resize(18, 15);
+    //level
+    image(select, 55, 215);
+    //row
+    image(select, 345, 215);
+    //misere
+    image(select, 180, 315);
+    //music
+    image(select, 480, 315);
   } else {
     /* draw doughnuts */
     g.display();
