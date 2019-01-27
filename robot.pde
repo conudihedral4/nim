@@ -101,7 +101,7 @@ class Robot {
     int findNumber(int[] heap, int[] nimSum) {
       int[] nSum = findNimSum(heap, nimSum);
       int niSum = toInt(nSum);
-      return (niSum-(toInt(heap)));
+      return ((toInt(heap))-niSum);
     }
 
     int[] findNimSum(int[] X, int[] Y) {

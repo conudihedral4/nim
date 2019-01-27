@@ -9,9 +9,11 @@
 /* GLOBAL VARIABLES */
 Game g;
 int chosenRow;         // restricts player to a specific row once chosen
+int winLose;           // 1 if player won, -1 if CPU won, 0 otherwise
 boolean menuScreen;    // are we on the menu screen?
 boolean playersTurn;   // is it the player's turn?
 boolean cpuEnabled;    // enable AI player
+boolean misere;        // are we playing misere?
 PImage quit;
 PImage reset;
 PImage confirm;
@@ -20,14 +22,20 @@ PImage playerOff;
 PImage cpuOn;
 PImage cpuOff;
 PImage canvas;
+PImage win;
+PImage lose;
+PImage confirmNo;
 PFont titleFont;
 PFont menuFont;
+
 
 void setup() {
   /* initialize game variables */
   chosenRow = -1;
+  winLose = 0;
   playersTurn = true;
   menuScreen = false;
+  misere = true;
 
   /* load images */
   quit = loadImage("quit.png");
@@ -38,11 +46,14 @@ void setup() {
   cpuOn = loadImage("cpu_on.png");
   cpuOff = loadImage("cpu_off.png");
   canvas = loadImage("background.png");
+  win = loadImage("win.png");
+  lose = loadImage("lose.png");
+  confirmNo = loadImage("confirm_no.png");
 
   /* load fonts */
   titleFont = loadFont("MunroSmall-172.vlw");
 
-  g = new Game(11,16);
+  g = new Game(3,5);
   size(600, 450);
   background(0);
   noStroke();
@@ -51,7 +62,7 @@ void setup() {
 }
 
 void mousePressed() {
-  if (playersTurn) {
+  if (playersTurn && winLose == 0) {
     /* check if any doughnuts are clicked */
     for (int i=0; i<g.numRows; ++i) {
       int numItems = g.minItems + i;
@@ -64,13 +75,24 @@ void mousePressed() {
             --g.table[i];
             chosenRow = i;
           }
+          boolean won = true;
+          /* ACHIEVEMENT UNLOCKED! (Triple for-loop) */
+          for (int k=0; k<g.numRows; ++k) {
+            if (g.table[k] != 0) {
+              won = false;
+              break;
+            }
+          }
+          if (won) {
+            winLose = misere ? -1 : 1;
+          }
           break;
         }
       }
     }
 
-    /* check if done button clicked */
-    if ((mouseX >= 250) && (mouseX < 350) && (mouseY >= 410) && (mouseY < 450)) {
+    /* check if confirm button clicked */
+    if ((mouseX >= 250) && (mouseX < 350) && (mouseY >= 410) && (mouseY < 450) && (chosenRow != -1)) {
       chosenRow = -1;
       g.cpuNormalMove();
     }
@@ -86,6 +108,7 @@ void mousePressed() {
     g = new Game(g.minItems,g.maxItems);
     playersTurn = true;
     chosenRow = -1;
+    winLose = 0;
   }
 
   /* update the screen */
@@ -109,9 +132,13 @@ void draw() {
     g.display();
 
     /* draw buttons */
-    image(quit, 550, 430, 50, 20);  // quit button
+    image(quit, 550, 430, 50, 20);   // quit button
     image(reset, 500, 430, 50, 20);  // reset button
-    image(confirm, 250, 410, 100, 40);   // confirm button
+    if (chosenRow == -1) {           // confirm button
+      image(confirmNo, 250, 410, 100, 40);
+    } else {
+      image(confirm, 250, 410, 100, 40);
+    }
 
     /* draw player/CPU icons */
     if (playersTurn) {
@@ -122,11 +149,19 @@ void draw() {
       image(cpuOn, 527, 0, 100, 40);
     }
 
+    /* draw win/lose icons */
+    if (winLose == 1) {
+      image(win, 200, 185, 200, 80);
+    }
+    if (winLose == -1) {
+      image(lose, 200, 185, 200, 80);
+    }
+
     //TESTTTTTT
     for (int i=0; i<g.numRows; ++i) {
       print(g.table[i]+" ");
     }
-    println();
+    println("winLose is " + winLose);
     //ENDTESTTTTT
   }
 

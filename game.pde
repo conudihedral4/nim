@@ -5,11 +5,11 @@ class Game {
   int numRows;             // number of rows
   int iconDim;             // side-length of a single (square) icon
   Item[][] itemMatrix;     // the items in each row
-  Robot ran;
+  RobotMisere ran;
 
   /* constructs a heap with specified min/max row sizes */
   Game(int minItems, int maxItems) {
-    ran = new Robot();
+    ran = new RobotMisere();
 
     if (maxItems <= minItems) {
       throw new IllegalArgumentException("Invalid row sizes: HEAP()");
@@ -39,16 +39,30 @@ class Game {
 
   /* the computer plays a turn */
   void cpuNormalMove() {
-    int[] move = ran.normalMove(this);
+    String mode = misere ? "misere" : "normal";
+    int[] move = ran.nextMove(this.table, mode);
+    println("sdfsdfsd: "+move[0]+" "+move[1]);
     int left = move[1];
-    for (int i=0; i<minItems+move[0]; ++i) {
-      if (!itemMatrix[move[0]][i].clicked) {
-        itemMatrix[move[0]][i].clicked = true;
+    int correctRow = move[0];
+    for (int i=0; i<minItems+correctRow; ++i) {
+      if (!itemMatrix[correctRow][i].clicked) {
+        itemMatrix[correctRow][i].clicked = true;
         --left;
       }
       if (left == 0) {
         break;
       }
+    }
+    table[correctRow] -= move[1];
+    boolean won = true;
+    for (int i=0; i<numRows; ++i) {
+      if (table[i] != 0) {
+        won = false;
+        break;
+      }
+    }
+    if (won) {
+      winLose = misere ? 1 : -1;
     }
   }
 
