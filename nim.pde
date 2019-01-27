@@ -6,12 +6,20 @@
  ***********************************************************
  */
 
+import processing.sound.*;
+
 /* GLOBAL VARIABLES */
 Game g;
 int chosenRow;         // restricts player to a specific row once chosen
 int winLose;           // 1 if player won, -1 if CPU won, 0 otherwise
 int startMin;          // number of items in top row to start
-int startMax;          // number of items in bottom row to start
+int startRows;         // number of rows
+
+int levelOffset;       // offsets of green triangle
+int rowOffset;
+int misereOffset;
+int musicOffset;
+
 boolean menuScreen;    // are we on the menu screen?
 boolean playersTurn;   // is it the player's turn?
 boolean cpuEnabled;    // enable AI player
@@ -33,9 +41,10 @@ PImage lose;
 PImage confirmNo;
 PImage one_start;
 PImage two_start;
+PImage donut;
+PImage select;
 PFont titleFont;
 
-import processing.sound.*;
 SoundFile music;
 
 String audioName = "data/tristesse.wav";
@@ -47,18 +56,14 @@ void setup() {
   chosenRow = -1;
   winLose = 0;
   startMin = 3;
-  startMax = 5;
+  startRows = 3;
   playersTurn = true;
   menuScreen = true;
-  misere = true;
-  soundtrack = true;
-   
-  //load sound
-  if (soundtrack){
+  misere = false;
+  soundtrack = false;
+
   path = sketchPath(audioName);
   music = new SoundFile(this, path);
-  music.loop();
-  }
 
   /* load images */
   donut = loadImage("donut_full.png");
@@ -91,63 +96,86 @@ void setup() {
 void mousePressed() {
   if (menuScreen) {
     /* level 1 */
-    if ((mouseX >= 600) && (mouseX < 0) && (mouseY >= 450) && (mouseY < 0)) {
+    if ((mouseX >= 50) && (mouseY >= 180) && (mouseX < 75) && (mouseY < 210)) {
       startMin = 3;
+      levelOffset = 0;
     }
     /* level 2 */
-    if ((mouseX >= 600) && (mouseX < 0) && (mouseY >= 450) && (mouseY < 0)) {
+    if ((mouseX >= 105) && (mouseY >= 180) && (mouseX < 130) && (mouseY < 210)) {
       startMin = 5;
+      levelOffset = 55;
     }
     /* level 3 */
-    if ((mouseX >= 600) && (mouseX < 0) && (mouseY >= 450) && (mouseY < 0)) {
+    if ((mouseX >= 160) && (mouseY >= 180) && (mouseX < 185) && (mouseY < 210)) {
       startMin = 7;
+      levelOffset = 110;
     }
     /* level 4 */
-    if ((mouseX >= 600) && (mouseX < 0) && (mouseY >= 450) && (mouseY < 0)) {
+    if ((mouseX >= 215) && (mouseY >= 180) && (mouseX < 240) && (mouseY < 210)) {
       startMin = 11;
+      levelOffset = 165;
     }
     /* 3 rows */
-    if ((mouseX >= 600) && (mouseX < 0) && (mouseY >= 450) && (mouseY < 0)) {
-      startMax = startMin + 2;
+    if ((mouseX >= 345) && (mouseY >= 180) && (mouseX < 370) && (mouseY < 210)) {
+      startRows = 3;
+      rowOffset = 0;
     }
     /* 4 rows */
-    if ((mouseX >= 600) && (mouseX < 0) && (mouseY >= 450) && (mouseY < 0)) {
-      startMax = startMin + 3;
+    if ((mouseX >= 400) && (mouseY >= 180) && (mouseX < 425) && (mouseY < 210)) {
+      startRows = 4;
+      rowOffset = 55;
     }
     /* 5 rows */
-    if ((mouseX >= 600) && (mouseX < 0) && (mouseY >= 450) && (mouseY < 0)) {
-      startMax = startMin + 4;
+    if ((mouseX >= 455) && (mouseY >= 180) && (mouseX < 485) && (mouseY < 210)) {
+      startRows = 5;
+      rowOffset = 110;
     }
     /* 6 rows */
-    if ((mouseX >= 600) && (mouseX < 0) && (mouseY >= 450) && (mouseY < 0)) {
-      startMax = startMin + 5;
+    if ((mouseX >= 510) && (mouseY >= 180) && (mouseX < 533) && (mouseY < 210)) {
+      startRows = 6;
+      rowOffset = 165;
     }
     /* misere on */
-    if ((mouseX >= 600) && (mouseX < 0) && (mouseY >= 450) && (mouseY < 0)) {
+    if ((mouseX >= 65) && (mouseY >= 280) && (mouseX < 110) && (mouseY < 310)) {
       misere = true;
+      misereOffset = -100;
     }
     /* misere off */
-    if ((mouseX >= 600) && (mouseX < 0) && (mouseY >= 450) && (mouseY < 0)) {
+    if ((mouseX >= 157) && (mouseY >= 280) && (mouseX < 217) && (mouseY < 310)) {
       misere = false;
+      misereOffset = 0;
     }
     /* music on */
-    if ((mouseX >= 600) && (mouseX < 0) && (mouseY >= 450) && (mouseY < 0)) {
+    if ((mouseX >= 365) && (mouseY >= 280) && (mouseX < 410) && (mouseY < 310)) {
       soundtrack = true;
+      musicOffset = -100;
     }
     /* music off */
-    if ((mouseX >= 600) && (mouseX < 0) && (mouseY >= 450) && (mouseY < 0)) {
+    if ((mouseX >= 457) && (mouseY >= 280) && (mouseX < 517) && (mouseY < 310)) {
       soundtrack = false;
+      musicOffset = 0;
     }
     /* 1P start */
-    if ((mouseX >= 600) && (mouseX < 0) && (mouseY >= 450) && (mouseY < 0)) {
+    if ((mouseX >= 40) && (mouseY >= 340) && (mouseX < 240) && (mouseY < 420)) {
       lonely = true;
+      g = new Game(startMin, startMin + startRows - 1);
+      menuScreen = false;
+      /* load sound */
+      if (soundtrack){
+        music.loop();
+      }
     }
     /* 2P start */
-    if ((mouseX >= 600) && (mouseX < 0) && (mouseY >= 450) && (mouseY < 0)) {
+    if ((mouseX >= 360) && (mouseY >= 340) && (mouseX < 560) && (mouseY < 420)) {
       lonely = false;
+      g = new Game(startMin, startMin + startRows - 1);
+      menuScreen = false;
+      /* load sound */
+      if (soundtrack){
+        music.loop();
+      }
     }
-    menuScreen = false;
-        
+
   } else if (playersTurn && winLose == 0) {
     /* check if any doughnuts are clicked */
     for (int i=0; i<g.numRows; ++i) {
@@ -186,7 +214,11 @@ void mousePressed() {
 
   /* check if quit button clicked */
   if ((mouseX >= 550) && (mouseX < 600) && (mouseY >= 430) && (mouseY < 450)) {
-    // TODO: ADD QUIT BEHAVIOUR
+    playersTurn = true;
+    chosenRow = -1;
+    winLose = 0;
+    music.stop();
+    menuScreen = true;
   }
 
   /* check if reset button clicked */
@@ -204,8 +236,8 @@ void mousePressed() {
 void draw() {
   background(0);
   image(canvas, 0, 0, 600, 450);
-  //CURRENTLY BROKEN
   if (menuScreen) {
+    //TEST RECTANGLE
     fill(255);
     textAlign(CENTER, CENTER);
     //game title
@@ -214,49 +246,50 @@ void draw() {
     donut.resize(80, 80);
     image(donut, 60, 40);
     image(donut, 460, 40);
-    
+
     //customization headings
     textSize(42);
     text("LEVEL:", 150, 150);
     text("NUMBER OF ROWS:", 450, 150);
     text("MISERE MODE:", 150, 250);
     text("MUSIC:", 450, 250);
-    
+
     //level options
     textSize(50);
     text("1", 65, 195);
     text("2", 120, 195);
     text("3", 175, 195);
     text("4", 230, 195);
-    
+
     //number of row options
     text("3", 360, 195);
     text("4", 415, 195);
     text("5", 470, 195);
     text("6", 525, 195);
-    
+
     //misere mode options
     text("ON", 90, 295);
     text("OFF", 190, 295);
-    
+
     //music options
     text("ON", 390, 295);
     text("OFF", 490, 295);
-    
+
     //start buttons
     image(one_start, 40, 340);
     image(two_start, 360, 340);
-    
-    //selector default positions
+
+    //selector positions
     select.resize(18, 15);
     //level
-    image(select, 55, 215);
+    println(levelOffset);
+    image(select, 57+levelOffset, 215);
     //row
-    image(select, 345, 215);
+    image(select, 345+rowOffset, 215);
     //misere
-    image(select, 180, 315);
+    image(select, 178+misereOffset, 315);
     //music
-    image(select, 480, 315);
+    image(select, 478+musicOffset, 315);
   } else {
     /* draw doughnuts */
     g.display();
