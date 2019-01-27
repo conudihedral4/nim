@@ -40,12 +40,8 @@ void setup() {
   background(0);
   noStroke();
   fill(102);
-<<<<<<< HEAD
   frameRate(2);
   noLoop();  // game does not automatically loop
-=======
-  noLoop();         // game does not automatically loop
->>>>>>> fc9b83abb4fc9cf54c2f1c8bc33888fd48d27420
 }
 
 void mousePressed() {

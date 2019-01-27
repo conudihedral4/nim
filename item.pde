@@ -32,23 +32,14 @@ class Item {
     }
   }
   void animate() {
-    int currentTime = millis();
-    
-    
     this.icon = loadImage("donut_onebite.png");
-    loop();
-    
-    while (millis() < currentTime + 300) {
-    }
-    currentTime = millis();
-    noLoop();
+    delay(300);
+    redraw();
     
     this.icon = loadImage("donut_twobites.png");
-    loop();
-    while (millis() < currentTime + 300) {
-    }
-    currentTime = millis();
-    noLoop();
+    delay(300);
+    redraw();
     
+    this.clicked = true;
   }
 }
