@@ -14,6 +14,7 @@ boolean menuScreen;    // are we on the menu screen?
 boolean playersTurn;   // is it the player's turn?
 boolean cpuEnabled;    // enable AI player
 boolean misere;        // are we playing misere?
+boolean soundtrack;    // chopin? 
 PImage quit;
 PImage reset;
 PImage confirm;
@@ -28,6 +29,12 @@ PImage confirmNo;
 PFont titleFont;
 PFont menuFont;
 
+import processing.sound.*;
+SoundFile music;
+
+String audioName = "/data/tristesse.wav";
+//needs to be saved int he same folder as .pde file
+String path;
 
 void setup() {
   /* initialize game variables */
@@ -36,6 +43,14 @@ void setup() {
   playersTurn = true;
   menuScreen = false;
   misere = true;
+  soundtrack = true;
+   
+  //load sound
+  if (soundtrack){
+  path = sketchPath(audioName);
+  music = new SoundFile(this, path);
+  music.loop();
+  }
 
   /* load images */
   quit = loadImage("quit.png");
