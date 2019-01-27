@@ -286,7 +286,6 @@ void draw() {
   background(0);
   image(canvas, 0, 0, 600, 450);
   if (menuScreen) {
-    //TEST RECTANGLE
     fill(255);
     textAlign(CENTER, CENTER);
     //game title
