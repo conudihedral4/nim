@@ -6,7 +6,8 @@ void setup() {
   background(0);
   noStroke();
   fill(102);
-  noLoop();        // game does not automatically loop
+  frameRate(2);
+  noLoop();  // game does not automatically loop
 }
 
 void mousePressed() {
@@ -16,12 +17,10 @@ void mousePressed() {
       Item currItem = g.itemMatrix[i][j];
       if ((mouseX >= currItem.x) && (mouseX < currItem.x + currItem.width) &&
           (mouseY >= currItem.y) && (mouseY < currItem.y + currItem.height)) {
-        currItem.clicked = true;
-        break;
+        currItem.animate();
       }
     }
   }
-  redraw();
 }
 
 void draw() {

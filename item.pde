@@ -31,4 +31,24 @@ class Item {
       image(icon, x, y, width, height);
     }
   }
+  void animate() {
+    int currentTime = millis();
+    
+    
+    this.icon = loadImage("donut_onebite.png");
+    loop();
+    
+    while (millis() < currentTime + 300) {
+    }
+    currentTime = millis();
+    noLoop();
+    
+    this.icon = loadImage("donut_twobites.png");
+    loop();
+    while (millis() < currentTime + 300) {
+    }
+    currentTime = millis();
+    noLoop();
+    
+  }
 }
