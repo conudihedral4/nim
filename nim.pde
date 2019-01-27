@@ -53,6 +53,8 @@ PFont titleFont;
 
 SoundFile music;
 SoundFile eatDonut;
+SoundFile victory;
+SoundFile boo;
 
 String audioName1 = "data/tristesse.wav";
 //needs to be saved int he same folder as .pde file
@@ -60,6 +62,12 @@ String path1;
 
 String audioName2 = "data/sfx.wav";
 String path2;
+
+String audioName3 = "data/victory.wav";
+String path3;
+
+String audioName4 = "data/boo.wav";
+String path4;
 
 void setup() {
   /* initialize game variables to defaults */
@@ -82,6 +90,12 @@ void setup() {
   
   path2 = sketchPath(audioName2);
   eatDonut = new SoundFile(this, path2);
+  
+  path3 = sketchPath(audioName3);
+  victory = new SoundFile(this, path3);
+  
+  path4 = sketchPath(audioName4);
+  boo = new Soundfile (this, path4);
   
 
   /* load images */
