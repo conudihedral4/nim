@@ -15,7 +15,6 @@ int startMax;          // number of items in bottom row to start
 boolean menuScreen;    // are we on the menu screen?
 boolean playersTurn;   // is it the player's turn?
 boolean cpuEnabled;    // enable AI player
-boolean misere; // are we playing misere?
 PImage donut;
 PImage select;
 boolean misere;        // are we playing misere?
@@ -39,7 +38,7 @@ PFont titleFont;
 import processing.sound.*;
 SoundFile music;
 
-String audioName = "/data/tristesse.wav";
+String audioName = "data/tristesse.wav";
 //needs to be saved int he same folder as .pde file
 String path;
 
