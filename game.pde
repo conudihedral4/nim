@@ -5,11 +5,11 @@ class Game {
   int numRows;             // number of rows
   int iconDim;             // side-length of a single (square) icon
   Item[][] itemMatrix;     // the items in each row
-  RobotMisere ran;
+  Robot ran;
 
   /* constructs a heap with specified min/max row sizes */
   Game(int minItems, int maxItems) {
-    ran = new RobotMisere();
+    ran = new Robot();
 
     if (maxItems <= minItems) {
       throw new IllegalArgumentException("Invalid row sizes: HEAP()");

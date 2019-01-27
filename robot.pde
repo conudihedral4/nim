@@ -1,186 +1,135 @@
 class Robot {
-  int MAX_LENGTH;
+  int[] nextMove(int[] heaps, String gameType) {
 
-  // empty constructor
-  Robot() {
-    MAX_LENGTH = 5;
-  }
+    assert heaps != null;
 
-  int[] misereMove(Game game) {
+    boolean is_misere = (gameType.equalsIgnoreCase("misere"));
     int[] move = new int[2];
-    int size = game.table.length;
-    int[] input = new int[size];
-    for (int i=0; i<size; i++) {
-      //copy the game table to avoid modify it directly
-      input[i] = game.table[i];
-    }
-    int[][] binGame = new int[input.length][];
-    //a 2D array with first row number, second binary digits
-    for (int l =0; l<input.length; l++) {
-      //for all the rows
-      binGame[l] = binaryArray(input[l]);
-    }
 
-    int[] binSum = new int[MAX_LENGTH];
-    for (int m = 0; m< MAX_LENGTH; m++) {
-      // that gives me the binary sum array
-      binSum[m] = binarySum(m, binGame);
+    //general strategy is identical for misere and normal play, until endgame state
+    //endgame is defined as if there are about to be only heaps of size one left
+    boolean endgame = false;
+
+    //count number of heaps that have strictly more than one items left
+    int moreThanOne = 0;
+    for (int i=0; i<heaps.length; i++) {
+      if (heaps[i] > 1) {
+        moreThanOne++;
+      }
     }
 
-    if (checkZero(binSum)) {
+    //endgame occurs if we have only 1 or 0 heaps with strictly more than one items
+    endgame = (moreThanOne <= 1);
 
-      //find row
-      int row = findRow(binGame, binSum);
-      move[0] = row;
+    //in a misere game and endgame state
+    //make a move that will end with an odd number of heaps all containing 1
+    if (is_misere && endgame) {
 
-      //find number
-      int number = findNumber(binGame[row], binSum);
-      move[1] = number;
-    } else {
+      //count number of nonempty heaps
+      int moves_left=0;
+      for (int i=0; i<heaps.length; i++) {
+        if (heaps[i] != 0) {
+          moves_left++;
+        }
+      }
+
+      //checks if we have an odd number of nonempty heaps
+      //and the max number of items out of all of the heaps
+      boolean odd_heaps = (moves_left % 2 == 1);
+      int max_items = findMax(heaps);
+
+      //if maximum number of items is 1, i.e. we only have heaps of size 1 left
+      //and there are an odd number of such heaps
+      //robot doesn't have a winning move, therefore leave random move
+      if (max_items == 1 && odd_heaps) {
+        return randomMove(heaps);
+      }
+
+      //we want to remove from the row that has 1 item
+      //results in an odd number of heaps of size 1
+      int index_of_max = findIndex(heaps, max_items);
+      move[0] = index_of_max;
+
+      int boolInt = (odd_heaps) ? 1 : 0;
+      move[1] = max_items - boolInt;
+
+      return move;
     }
 
+    //if we aren't in misere or endgame, then the gameplay is the same!
+    //find nimsum and try to make it 0:
+    int nimSum = calcNimSum(heaps);
 
+    if (nimSum == 0){
+      //no winning move if nimsum is 0
+      return randomMove(heaps);
+    }
+
+    //nimSum doesn't equal 0 so the bot has a winning move
+    for (int i=0; i<heaps.length; i++) {
+      int target_size = heaps[i] ^ nimSum;
+      if (target_size < heaps[i]) {
+        move[0]= i;
+        move[1]= heaps[i] - target_size;
+        return move;
+      }
+    }
+    move[0] = 0;
+    move[1] = 0;
     return move;
   }
-///////////////Beginning of normal mode///////////
-  int[] normalMove(Game game) {
 
-    int[] move = new int[2];
-    //will always be array of 2 int
-    //format: [row to remove from, #elements to remove]
-    int size = game.table.length;
-    int[] input = new int[size];
-    //will work from heap, not game.table directly
+  //helper methods!
 
-    for (int i=0; i<size; i++) {
-      //copy the game table to avoid modify it directly
-      input[i] = game.table[i];
-    }
-    int[][] binGame = new int[input.length][];
-    //a 2D array with first row number, second binary digits
-    for (int l =0; l<input.length; l++) {
-      //for all the rows
-      binGame[l] = binaryArray(input[l]);
-    }
-
-    int[] binSum = new int[MAX_LENGTH];
-    for (int m = 0; m< MAX_LENGTH; m++) {
-      // that gives me the binary sum array
-      binSum[m] = binarySum(m, binGame);
-    }
-    if (!checkZero(binSum)) {
-
-      //find row
-      int row = findRow(binGame, binSum);
-      move[0] = row;
-
-      //find number
-      int number = findNumber(binGame[row], binSum);
-      move[1] = number;
-    } 
-    else {//random (If the nim-sum is equal to 0000)
-      move[1] = 1; //The default move always remove one 
-      for (int i=0; i<input.length; i++) {
-        if(input[i] != 0){ 
-          move[0] = input[i];
-          break;
-        }
+  //max of int array
+  int findMax(int[] arr) {
+    //assume max is first entry
+    int max = arr[0];
+    for (int i = 0; i<arr.length; i++) {
+      if (arr[i] > max) {
+        max = arr[i];
       }
     }
-        //In normal play, the winning strategy is to finish every move with a nim-sum of 0
-        return move;
+    return max;
   }
-///////////helper methods////////////
-    boolean checkZero(int[] sum) {
-      for (int i=0; i<MAX_LENGTH; i++) {
-        if (sum[i] == 1) return false;
+
+  //index of max
+  int findIndex(int[] arr, int max) {
+    for (int i=0; i<arr.length; i++) {
+      if (arr[i] == max) {
+        return i;
       }
-      return true;
     }
-
-    int findNumber(int[] heap, int[] nimSum) {
-      int[] nSum = findNimSum(heap, nimSum);
-      int niSum = toInt(nSum);
-      return ((toInt(heap))-niSum);
-    }
-
-    int[] findNimSum(int[] X, int[] Y) {
-      int[] Z = new int[MAX_LENGTH];
-      for (int k=0; k< MAX_LENGTH; k++) {
-        Z[k] = (X[k] + Y[k])%2;
-      }
-      return Z;
-    }
-
-    int findRow(int[][] rows, int[] binSum) {
-
-      for (int k=0; k< rows.length; k++) {
-        //for every heap k
-        int[] sumK = new int[MAX_LENGTH];
-        //sumK is the binary sum of heapK and binSum
-
-        for (int i=0; i<MAX_LENGTH; i++) {
-          //filling in the array for the sum for heapK+binSum
-          sumK[i] = (rows[k][i]+binSum[i])%2;
-        }
-
-        //binary to integer
-        int intSumK = toInt(sumK);
-        int intBinSum = toInt(binSum);
-        if (intSumK<intBinSum) return k;
-      }
-      return 0; //dummy variable
-    }
-
-    int toInt(int[] binary) {
-      int integer = 0;
-      for (int i=0; i<MAX_LENGTH; i++) {
-        integer += (int)(binary[i]*Math.pow(2, (3-i)));
-      }
-      return integer;
-    }
-
-    int binarySum (int m, int[][] rows) {
-      //this method returns either 0 or 1 for each sum
-      int sum = 0;
-
-      for (int i=0; i<rows.length; i++) {
-        sum += rows[i][m];
-      }
-      return (sum%2);
-    }
-
-    int sum(int s, int[][] game) {
-      return 0;
-    }
-
-
-    int[] binaryArray(int k) {
-      //returns an array of size 4 with the binary positions 
-      String binK = Integer.toBinaryString(k);
-      int[] binArray = new int[MAX_LENGTH];
-      //will always have size 4 since the largest number a row can have is 8
-
-      //if the string is shorter than 4, I need all the first digits to be 0
-      if (binK.length() < MAX_LENGTH) {
-        int binLength = binK.length();
-        for (int c = 0; c<(MAX_LENGTH-binLength); c++) {
-          binArray[c] = 0;
-        }
-        //then enter the digits of the string
-        int d = 0;
-        for (int j = MAX_LENGTH-binLength; j<MAX_LENGTH; j++) {
-          binArray[j] = Integer.parseInt(""+binK.charAt(d));
-          d++;
-        }
-      }
-      //put the digits in if there are 4 digits
-      else {
-        for (int i=0; i<binK.length(); i++) {
-          binArray[i] = Integer.parseInt(""+binK.charAt(i));
-        }
-      }
-      println(binArray);  //for debugging!!!!
-      return binArray;
-    }
+    //dummy return
+    return 0;
   }
+
+  //generates a random move if robot can't win
+  int[] randomMove(int[] heaps) {
+    int[] retTable = new int[2];
+    while(true){
+      int r = (int)(random(heaps.length));
+      if (heaps[r] != 0) {
+        retTable[0] = r;
+        break;
+      }
+    }
+
+    int n = (int) random(heaps[retTable[0]]+1);
+    //random integer from 0 to heaps[r] inclusive
+    retTable[1] = n;
+
+    return retTable;
+  }
+
+  //calculates nimsum
+  int calcNimSum(int[] heaps) {
+    int toReturn = heaps[0];
+
+    for (int i=1; i<heaps.length; i++) {
+      toReturn = toReturn ^ heaps[i];
+    }
+    return toReturn;
+  }
+
+}
