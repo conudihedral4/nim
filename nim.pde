@@ -47,8 +47,7 @@ void setup() {
   background(0);
   noStroke();
   fill(102);
-  frameRate(2);
-  noLoop();  // game does not automatically loop
+  noLoop();         // game does not automatically loop
 }
 
 void mousePressed() {
@@ -73,7 +72,7 @@ void mousePressed() {
     /* check if done button clicked */
     if ((mouseX >= 250) && (mouseX < 350) && (mouseY >= 410) && (mouseY < 450)) {
       chosenRow = -1;
-      playersTurn = false;
+      g.cpuNormalMove();
     }
   }
 
@@ -96,21 +95,22 @@ void mousePressed() {
 void draw() {
   background(0);
   image(canvas, 0, 0, 600, 450);
+  //CURRENTLY BROKEN
   if (menuScreen) {
     fill(255);
     textAlign(CENTER);
     textFont(titleFont);
     text("NIM", 300, 125, 400, 150);
     textFont(menuFont);
-    text("PUZZLE SIZE:  3  5  7  11", 300, 175, 400, 200);
-    text("NUMBER OF ROWS:  3  4  5  6", 300, 225, 400, 350);
+    //text("PUZZLE SIZE:  3  5  7  11", 300, 175, 400, 200);
+    //text("NUMBER OF ROWS:  3  4  5  6", 300, 225, 400, 350);
   } else {
     /* draw doughnuts */
     g.display();
 
     /* draw buttons */
     image(quit, 550, 430, 50, 20);  // quit button
-    image(reset, 550, 430, 50, 20);  // reset button
+    image(reset, 500, 430, 50, 20);  // reset button
     image(confirm, 250, 410, 100, 40);   // confirm button
 
     /* draw player/CPU icons */
