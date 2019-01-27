@@ -53,7 +53,7 @@ void setup() {
   menuScreen = true;
   misere = true;
   soundtrack = true;
-   
+
   //load sound
   if (soundtrack){
   path = sketchPath(audioName);
@@ -142,13 +142,14 @@ void mousePressed() {
     /* 1P start */
     if ((mouseX >= 600) && (mouseX < 0) && (mouseY >= 450) && (mouseY < 0)) {
       lonely = true;
+      menuScreen = false;
     }
     /* 2P start */
     if ((mouseX >= 600) && (mouseX < 0) && (mouseY >= 450) && (mouseY < 0)) {
       lonely = false;
+      menuScreen = false;
     }
-    menuScreen = false;
-        
+
   } else if (playersTurn && winLose == 0) {
     /* check if any doughnuts are clicked */
     for (int i=0; i<g.numRows; ++i) {
@@ -205,8 +206,10 @@ void mousePressed() {
 void draw() {
   background(0);
   image(canvas, 0, 0, 600, 450);
-  //CURRENTLY BROKEN
   if (menuScreen) {
+    //TEST RECTANGLE
+    rect(65,195,20,40);
+
     fill(255);
     textAlign(CENTER, CENTER);
     //game title
@@ -215,39 +218,39 @@ void draw() {
     donut.resize(80, 80);
     image(donut, 60, 40);
     image(donut, 460, 40);
-    
+
     //customization headings
     textSize(42);
     text("LEVEL:", 150, 150);
     text("NUMBER OF ROWS:", 450, 150);
     text("MISERE MODE:", 150, 250);
     text("MUSIC:", 450, 250);
-    
+
     //level options
     textSize(50);
     text("1", 65, 195);
     text("2", 120, 195);
     text("3", 175, 195);
     text("4", 230, 195);
-    
+
     //number of row options
     text("3", 360, 195);
     text("4", 415, 195);
     text("5", 470, 195);
     text("6", 525, 195);
-    
+
     //misere mode options
     text("ON", 90, 295);
     text("OFF", 190, 295);
-    
+
     //music options
     text("ON", 390, 295);
     text("OFF", 490, 295);
-    
+
     //start buttons
     image(one_start, 40, 340);
     image(two_start, 360, 340);
-    
+
     //selector default positions
     select.resize(18, 15);
     //level
