@@ -57,7 +57,6 @@ SoundFile victory;
 SoundFile boo;
 
 String audioName1 = "data/tristesse.wav";
-//needs to be saved int he same folder as .pde file
 String path1;
 
 String audioName2 = "data/sfx.wav";
@@ -87,16 +86,15 @@ void setup() {
 
   path1 = sketchPath(audioName1);
   music = new SoundFile(this, path1);
-  
+
   path2 = sketchPath(audioName2);
   eatDonut = new SoundFile(this, path2);
-  
+
   path3 = sketchPath(audioName3);
   victory = new SoundFile(this, path3);
-  
+
   path4 = sketchPath(audioName4);
   boo = new SoundFile (this, path4);
-  
 
   /* load images */
   donut = loadImage("donut_full.png");
@@ -286,7 +284,6 @@ void draw() {
   background(0);
   image(canvas, 0, 0, 600, 450);
   if (menuScreen) {
-    //TEST RECTANGLE
     fill(255);
     textAlign(CENTER, CENTER);
     //game title
@@ -350,7 +347,7 @@ void draw() {
     } else {
       image(confirm, 250, 410, 100, 40);
     }
-    
+
     if (lonely) {
       /* draw player/CPU icons */
       if (playersTurn) {
@@ -375,12 +372,15 @@ void draw() {
     if (winLose == 1) {
       if (lonely) {
         image(win, 200, 185, 200, 80);
+        victory.cue(6);
         victory.play();
       } else if (playerOneTurn) {
         image(win_p1, 200, 185, 200, 80);
+        victory.cue(6);
         victory.play();
       } else {
         image(win_p2, 200, 185, 200, 80);
+        victory.cue(6);
         victory.play();
       }
     }
@@ -388,6 +388,19 @@ void draw() {
       if (lonely) {
         image(lose, 200, 185, 200, 80);
         boo.play();
+<<<<<<< HEAD
+=======
+      } else if (playerOneTurn) {
+        //P1 lost so P2 won
+        image(win_p2, 200, 185, 200, 80);
+        victory.cue(6);
+        victory.play();
+      } else {
+        //P2 lost so P1 won
+        image(win_p1, 200, 185, 200, 80);
+        victory.cue(6);
+        victory.play();
+>>>>>>> b6da6d321b42ade1a1b931c1fe62c731b1592232
       }
     }
 
