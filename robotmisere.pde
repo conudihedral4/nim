@@ -42,7 +42,7 @@ class RobotMisere {
       //and there are an odd number of such heaps
       //robot doesn't have a winning move, therefore leave random move
       if (max_items == 1 && odd_heaps) {
-        return randomMove();
+        return randomMove(heaps);
       }
 
       //we want to remove from the row that has 1 item
@@ -62,7 +62,7 @@ class RobotMisere {
 
     if (nimSum == 0){
       //no winning move if nimsum is 0
-      return randomMove();
+      return randomMove(heaps);
     }
 
     //nimSum doesn't equal 0 so the bot has a winning move
@@ -105,13 +105,22 @@ class RobotMisere {
   }
 
   //generates a random move if robot can't win
-  int[] randomMove() {
+  int[] randomMove(int[] heaps) {
     int[] retTable = new int[2];
-    int r;
-    // keep going until valid random int is found
-    // while(true) {
-      //r = (int) random(0,num);
-    // }
+    while(true){
+      //first while to determine the row number
+      int r = (int)(random(heaps.length));
+      if (heaps[r] != 0) {
+        retTable[0] = r;
+        break;
+      }
+      else continue;
+    }
+    
+    int n = (int)random(heaps[retTable[0]]+1);
+    //random integer from 0 to heaps[r] inclusive
+    retTable[1] = n;
+    
     return retTable;
   }
 
