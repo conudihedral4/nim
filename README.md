@@ -5,12 +5,12 @@ Created for [ConUHacks](https://conuhacks.io) IV from 26-27 January 2019.
 
 ## Usage
 Open the file `nim.pde` in a Processing window and run the sketch.  
-![menu-screen](media/menu_screen.png"){: .center-image, width="460px"}
+![menu-screen](media/menu_screen.png")
 
 Before starting the game, you may wish to change the difficulty or toggle game modes. Do so by clicking the various options on the main menu.
 
 ## How to play
-![game-screen](media/game_screen.png"){: .center-image, width="460px"}
+![game-screen](media/game_screen.png")
 
 Every turn, you may remove any number of donuts you wish from any __one__ row of the board. Click on the donuts to remove them and click on the `CONTINUE` button to end your turn. In __normal__ mode, the goal of the game is to click the last donut, while in __misère__ mode, the goal of the game is to not click the last donut.
 
