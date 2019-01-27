@@ -221,7 +221,7 @@ void mousePressed() {
         Item currItem = g.itemMatrix[i][j];
         if ((mouseX >= currItem.x) && (mouseX < currItem.x + currItem.width) &&
             (mouseY >= currItem.y) && (mouseY < currItem.y + currItem.height)) {
-          if (chosenRow == -1 || chosenRow == i) {
+          if ((chosenRow == -1 || chosenRow == i) && !currItem.clicked) {
             currItem.clicked = true;
             eatDonut.play();
             --g.table[i];
