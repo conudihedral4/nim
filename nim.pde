@@ -375,12 +375,15 @@ void draw() {
     if (winLose == 1) {
       if (lonely) {
         image(win, 200, 185, 200, 80);
+        victory.cue(6);
         victory.play();
       } else if (playerOneTurn) {
         image(win_p1, 200, 185, 200, 80);
+        victory.cue(6);
         victory.play();
       } else {
         image(win_p2, 200, 185, 200, 80);
+        victory.cue(6);
         victory.play();
       }
     }
@@ -391,10 +394,12 @@ void draw() {
       } else if (playerOneTurn) {
         //P1 lost so P2 won
         image(win_p2, 200, 185, 200, 80);
+        victory.cue(6);
         victory.play();
       } else {
         //P2 lost so P1 won
         image(win_p1, 200, 185, 200, 80);
+        victory.cue(6);
         victory.play();
       }
     }
