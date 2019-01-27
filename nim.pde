@@ -47,7 +47,8 @@ void setup() {
   background(0);
   noStroke();
   fill(102);
-  noLoop();         // game does not automatically loop
+  frameRate(2);
+  noLoop();  // game does not automatically loop
 }
 
 void mousePressed() {

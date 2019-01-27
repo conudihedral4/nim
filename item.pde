@@ -31,4 +31,15 @@ class Item {
       image(icon, x, y, width, height);
     }
   }
+  void animate() {
+    this.icon = loadImage("donut_onebite.png");
+    delay(300);
+    redraw();
+    
+    this.icon = loadImage("donut_twobites.png");
+    delay(300);
+    redraw();
+    
+    this.clicked = true;
+  }
 }
