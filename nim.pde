@@ -23,20 +23,26 @@ int musicOffset;
 boolean menuScreen;    // are we on the menu screen?
 boolean playersTurn;   // is it the player's turn?
 boolean cpuEnabled;    // enable AI player
-PImage donut;
-PImage select;
 boolean misere;        // are we playing misere?
 boolean soundtrack;    // chopin? 
 boolean lonely;        // singleplayer?
+boolean playerOneTurn; // player 1's turn?
+boolean playerTwoTurn; // player 2's turn?
 PImage quit;
 PImage reset;
 PImage confirm;
 PImage playerOn;
 PImage playerOff;
+PImage playerOneOn;
+PImage playerOneOff;
+PImage playerTwoOn;
+PImage playerTwoOff;
 PImage cpuOn;
 PImage cpuOff;
 PImage canvas;
 PImage win;
+PImage win_p1;
+PImage win_p2;
 PImage lose;
 PImage confirmNo;
 PImage one_start;
@@ -57,7 +63,12 @@ void setup() {
   winLose = 0;
   startMin = 3;
   startRows = 3;
-  playersTurn = true;
+  if (lonely) {
+    playersTurn = true;
+  } else {
+    playerOneTurn = true;
+    playerTwoTurn = false;
+  }
   menuScreen = true;
   misere = false;
   soundtrack = false;
@@ -73,10 +84,16 @@ void setup() {
   confirm = loadImage("confirm.png");
   playerOn = loadImage("player_on.png");
   playerOff = loadImage("player_off.png");
+  playerOneOn = loadImage("player1_on.png");
+  playerOneOff = loadImage("player1_off.png");
+  playerTwoOn = loadImage("player2_on.png");
+  playerTwoOff = loadImage("player2_off.png");
   cpuOn = loadImage("cpu_on.png");
   cpuOff = loadImage("cpu_off.png");
   canvas = loadImage("background.png");
   win = loadImage("win.png");
+  win_p1 = loadImage("win_p1.png");
+  win_p2 = loadImage("win_p2.png");
   lose = loadImage("lose.png");
   confirmNo = loadImage("confirm_no.png");
   one_start = loadImage("one_p.png");
@@ -176,7 +193,7 @@ void mousePressed() {
       }
     }
 
-  } else if (playersTurn && winLose == 0) {
+  } else if ((playersTurn || playerOneTurn || playerTwoTurn) && winLose == 0) {
     /* check if any doughnuts are clicked */
     for (int i=0; i<g.numRows; ++i) {
       int numItems = g.minItems + i;
@@ -208,13 +225,20 @@ void mousePressed() {
     /* check if confirm button clicked */
     if ((mouseX >= 250) && (mouseX < 350) && (mouseY >= 410) && (mouseY < 450) && (chosenRow != -1)) {
       chosenRow = -1;
-      g.cpuNormalMove();
+      if (lonely){
+        g.cpuNormalMove();
+      } else {
+        playerOneTurn = playerOneTurn ? false : true;
+        playerTwoTurn = playerTwoTurn ? false : true;
+      }
     }
   }
 
   /* check if quit button clicked */
   if ((mouseX >= 550) && (mouseX < 600) && (mouseY >= 430) && (mouseY < 450)) {
     playersTurn = true;
+    playerOneTurn = true;
+    playerTwoTurn = false;
     chosenRow = -1;
     winLose = 0;
     music.stop();
@@ -225,6 +249,8 @@ void mousePressed() {
   if ((mouseX >= 500) && (mouseX < 550) && (mouseY >= 430) && (mouseY < 450)) {
     g = new Game(g.minItems,g.maxItems);
     playersTurn = true;
+    playerOneTurn = true;
+    playerTwoTurn = false;
     chosenRow = -1;
     winLose = 0;
   }
@@ -302,22 +328,47 @@ void draw() {
     } else {
       image(confirm, 250, 410, 100, 40);
     }
-
-    /* draw player/CPU icons */
-    if (playersTurn) {
-      image(playerOn, 0, 0, 100, 40);
-      image(cpuOff, 527, 0, 100, 40);
+    
+    if (lonely) {
+      /* draw player/CPU icons */
+      if (playersTurn) {
+        image(playerOn, 0, 0, 100, 40);
+        image(cpuOff, 527, 0, 100, 40);
+      } else {
+        image(playerOff, 0, 0, 100, 40);
+        image(cpuOn, 527, 0, 100, 40);
+      }
     } else {
-      image(playerOff, 0, 0, 100, 40);
-      image(cpuOn, 527, 0, 100, 40);
+      //2p turns
+        if (playerOneTurn) {
+        image(playerOneOn, 0, 0, 100, 40);
+        image(playerTwoOff, 500, 0, 100, 40);
+      } else {
+        image(playerOneOff, 0, 0, 100, 40);
+        image(playerTwoOn, 500, 0, 100, 40);
+      }
     }
 
     /* draw win/lose icons */
     if (winLose == 1) {
-      image(win, 200, 185, 200, 80);
+      if (lonely) {
+        image(win, 200, 185, 200, 80);
+      } else if (playerOneTurn) {
+        image(win_p1, 200, 185, 200, 80);
+      } else {
+        image(win_p2, 200, 185, 200, 80);
+      }
     }
     if (winLose == -1) {
-      image(lose, 200, 185, 200, 80);
+      if (lonely) {
+        image(lose, 200, 185, 200, 80);
+      } else if (playerOneTurn) {
+        //P1 lost so P2 won
+        image(win_p2, 200, 185, 200, 80);
+      } else {
+        //P2 lost so P1 won
+        image(win_p1, 200, 185, 200, 80);
+      }
     }
 
     //TESTTTTTT
