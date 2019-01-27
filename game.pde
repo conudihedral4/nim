@@ -25,9 +25,9 @@ class Game {
     }
 
     /* determine size of icons */
-    this.iconDim = 100;
+    this.iconDim = 50;
     if (maxItems > 8) {
-      this.iconDim = 960/maxItems;
+      this.iconDim = 480/maxItems;
     }
 
     /* fill matrix */
@@ -41,12 +41,12 @@ class Game {
     Item[][] matrix = new Item[numRows][maxItems];
 
     /* start at bottom of screen */
-    int y = 800 - (iconDim + bufferDist);
+    int y = 400 - (iconDim + bufferDist);
 
     /* loop through every row */
     for (int i=numRows-1; i>=0; --i) {
       int numItems = minItems + i;
-      int x = (1200 - ((numItems*(iconDim + 2*bufferDist)))) / 2;
+      int x = (600 - ((numItems*(iconDim + 2*bufferDist)))) / 2;
       /* loop through number of items in row */
       for (int j=0; j<numItems; ++j) {
         /* create new item with unique coordinates */
