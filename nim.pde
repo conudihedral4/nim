@@ -388,8 +388,6 @@ void draw() {
       if (lonely) {
         image(lose, 200, 185, 200, 80);
         boo.play();
-<<<<<<< HEAD
-=======
       } else if (playerOneTurn) {
         //P1 lost so P2 won
         image(win_p2, 200, 185, 200, 80);
@@ -400,8 +398,8 @@ void draw() {
         image(win_p1, 200, 185, 200, 80);
         victory.cue(6);
         victory.play();
->>>>>>> b6da6d321b42ade1a1b931c1fe62c731b1592232
       }
     }
 
+  }
 }
