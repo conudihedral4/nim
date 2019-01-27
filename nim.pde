@@ -52,10 +52,14 @@ PImage select;
 PFont titleFont;
 
 SoundFile music;
+SoundFile eatDonut;
 
-String audioName = "data/tristesse.wav";
+String audioName1 = "data/tristesse.wav";
 //needs to be saved int he same folder as .pde file
-String path;
+String path1;
+
+String audioName2 = "data/sfx.wav";
+String path2;
 
 void setup() {
   /* initialize game variables to defaults */
@@ -73,8 +77,12 @@ void setup() {
   misere = false;
   soundtrack = false;
 
-  path = sketchPath(audioName);
-  music = new SoundFile(this, path);
+  path1 = sketchPath(audioName1);
+  music = new SoundFile(this, path1);
+  
+  path2 = sketchPath(audioName2);
+  eatDonut = new SoundFile(this, path2);
+  
 
   /* load images */
   donut = loadImage("donut_full.png");
@@ -203,6 +211,7 @@ void mousePressed() {
             (mouseY >= currItem.y) && (mouseY < currItem.y + currItem.height)) {
           if (chosenRow == -1 || chosenRow == i) {
             currItem.clicked = true;
+            eatDonut.play();
             --g.table[i];
             chosenRow = i;
           }

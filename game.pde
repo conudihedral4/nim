@@ -47,6 +47,7 @@ class Game {
     for (int i=0; i<minItems+correctRow; ++i) {
       if (!itemMatrix[correctRow][i].clicked) {
         itemMatrix[correctRow][i].clicked = true;
+        eatDonut.play();
         --left;
       }
       if (left == 0) {
