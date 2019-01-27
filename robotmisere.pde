@@ -108,19 +108,17 @@ class RobotMisere {
   int[] randomMove(int[] heaps) {
     int[] retTable = new int[2];
     while(true){
-      //first while to determine the row number
       int r = (int)(random(heaps.length));
       if (heaps[r] != 0) {
         retTable[0] = r;
         break;
       }
-      else continue;
     }
-    
-    int n = (int)random(heaps[retTable[0]]+1);
+
+    int n = (int) random(heaps[retTable[0]]+1);
     //random integer from 0 to heaps[r] inclusive
     retTable[1] = n;
-    
+
     return retTable;
   }
 
