@@ -9,8 +9,9 @@
 /* GLOBAL VARIABLES */
 Game g;
 int chosenRow;         // restricts player to a specific row once chosen
-boolean playersTurn;
-
+boolean menuScreen;    // are we on the menu screen?
+boolean playersTurn;   // is it the player's turn?
+boolean cpuEnabled;    // enable AI player
 PImage quit;
 PImage reset;
 PImage confirm;
@@ -19,11 +20,14 @@ PImage playerOff;
 PImage cpuOn;
 PImage cpuOff;
 PImage canvas;
+PFont titleFont;
+PFont menuFont;
 
 void setup() {
   /* initialize game variables */
   chosenRow = -1;
   playersTurn = true;
+  menuScreen = false;
 
   /* load images */
   quit = loadImage("quit.png");
@@ -35,8 +39,11 @@ void setup() {
   cpuOff = loadImage("cpu_off.png");
   canvas = loadImage("background.png");
 
-  g = new Game(3,8);
-  size(1200, 900);
+  /* load fonts */
+  titleFont = loadFont("MunroSmall-172.vlw");
+
+  g = new Game(11,16);
+  size(600, 450);
   background(0);
   noStroke();
   fill(102);
@@ -44,35 +51,40 @@ void setup() {
 }
 
 void mousePressed() {
-  /* check if any doughnuts are clicked */
-  for (int i=0; i<g.numRows; ++i) {
-    int numItems = g.minItems + i;
-    for (int j=0; j<numItems; ++j) {
-      Item currItem = g.itemMatrix[i][j];
-      if ((mouseX >= currItem.x) && (mouseX < currItem.x + currItem.width) &&
-          (mouseY >= currItem.y) && (mouseY < currItem.y + currItem.height)) {
-        if (chosenRow == -1 || chosenRow == i) {
-          currItem.clicked = true;
-          --g.table[i];
-          chosenRow = i;
+  if (playersTurn) {
+    /* check if any doughnuts are clicked */
+    for (int i=0; i<g.numRows; ++i) {
+      int numItems = g.minItems + i;
+      for (int j=0; j<numItems; ++j) {
+        Item currItem = g.itemMatrix[i][j];
+        if ((mouseX >= currItem.x) && (mouseX < currItem.x + currItem.width) &&
+            (mouseY >= currItem.y) && (mouseY < currItem.y + currItem.height)) {
+          if (chosenRow == -1 || chosenRow == i) {
+            currItem.clicked = true;
+            --g.table[i];
+            chosenRow = i;
+          }
+          break;
         }
-        break;
       }
+    }
+
+    /* check if done button clicked */
+    if ((mouseX >= 250) && (mouseX < 350) && (mouseY >= 410) && (mouseY < 450)) {
+      chosenRow = -1;
+      playersTurn = false;
     }
   }
 
   /* check if quit button clicked */
-  if ((mouseX >= 1100) && (mouseX < 1200) && (mouseY >= 860) && (mouseY < 900)) {
+  if ((mouseX >= 550) && (mouseX < 600) && (mouseY >= 430) && (mouseY < 450)) {
     // TODO: ADD QUIT BEHAVIOUR
   }
 
   /* check if reset button clicked */
-  if ((mouseX >= 1000) && (mouseX < 1100) && (mouseY >= 860) && (mouseY < 900)) {
+  if ((mouseX >= 500) && (mouseX < 550) && (mouseY >= 430) && (mouseY < 450)) {
     g = new Game(g.minItems,g.maxItems);
-  }
-
-  /* check if done button clicked */
-  if ((mouseX >= 500) && (mouseX < 700) && (mouseY >= 820) && (mouseY < 900)) {
+    playersTurn = true;
     chosenRow = -1;
   }
 
@@ -82,30 +94,39 @@ void mousePressed() {
 
 void draw() {
   background(0);
-  image(canvas, 0, 0, 1200, 900);
-  /* draw doughnuts */
-  g.display();
-
-  /* draw buttons */
-  image(quit, 1100, 860, 100, 40);  // quit button
-  image(reset, 1000, 860, 100, 40);  // reset button
-  image(confirm, 500, 820, 200, 80);   // done button
-
-  /* draw player/CPU icons */
-  if (playersTurn) {
-    image(playerOn, 0, 0, 200, 80);
-    image(cpuOff, 1000, 0, 200, 80);
+  image(canvas, 0, 0, 600, 450);
+  if (menuScreen) {
+    fill(255);
+    textAlign(CENTER);
+    textFont(titleFont);
+    text("NIM", 300, 125, 400, 150);
+    textFont(menuFont);
+    text("PUZZLE SIZE:  3  5  7  11", 300, 175, 400, 200);
+    text("NUMBER OF ROWS:  3  4  5  6", 300, 225, 400, 350);
   } else {
-    image(playerOff, 0, 0, 200, 80);
-    image(cpuOn, 1000, 0, 200, 80);
-  }
+    /* draw doughnuts */
+    g.display();
 
+    /* draw buttons */
+    image(quit, 550, 430, 50, 20);  // quit button
+    image(reset, 550, 430, 50, 20);  // reset button
+    image(confirm, 250, 410, 100, 40);   // confirm button
 
-  //TESTTTTTT
-  for (int i=0; i<g.numRows; ++i) {
-    print(g.table[i]+" ");
+    /* draw player/CPU icons */
+    if (playersTurn) {
+      image(playerOn, 0, 0, 100, 40);
+      image(cpuOff, 527, 0, 100, 40);
+    } else {
+      image(playerOff, 0, 0, 100, 40);
+      image(cpuOn, 527, 0, 100, 40);
+    }
+
+    //TESTTTTTT
+    for (int i=0; i<g.numRows; ++i) {
+      print(g.table[i]+" ");
+    }
+    println();
+    //ENDTESTTTTT
   }
-  println();
-  //ENDTESTTTTT
 
 }
