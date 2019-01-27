@@ -331,7 +331,6 @@ void draw() {
     //selector positions
     select.resize(18, 15);
     //level
-    println(levelOffset);
     image(select, 57+levelOffset, 215);
     //row
     image(select, 345+rowOffset, 215);
@@ -400,12 +399,5 @@ void draw() {
       }
     }
 
-    //TESTTTTTT
-    for (int i=0; i<g.numRows; ++i) {
-      print(g.table[i]+" ");
-    }
-    println("winLose is " + winLose);
-    //ENDTESTTTTT
   }
-
 }

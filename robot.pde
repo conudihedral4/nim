@@ -108,15 +108,15 @@ class Robot {
   int[] randomMove(int[] heaps) {
     int[] retTable = new int[2];
     while(true){
-      int r = (int)(random(heaps.length));
+      int r = int((random(heaps.length)));
       if (heaps[r] != 0) {
         retTable[0] = r;
         break;
       }
     }
 
-    int n = (int) random(heaps[retTable[0]]+1);
-    //random integer from 0 to heaps[r] inclusive
+    int n = int(random(1, heaps[retTable[0]]+1));
+    //random integer from 1 to heaps[r] inclusive
     retTable[1] = n;
 
     return retTable;

@@ -41,7 +41,6 @@ class Game {
   void cpuNormalMove() {
     String mode = misere ? "misere" : "normal";
     int[] move = ran.nextMove(this.table, mode);
-    println("sdfsdfsd: "+move[0]+" "+move[1]);
     int left = move[1];
     int correctRow = move[0];
     for (int i=0; i<minItems+correctRow; ++i) {
