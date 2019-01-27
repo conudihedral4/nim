@@ -57,7 +57,6 @@ SoundFile victory;
 SoundFile boo;
 
 String audioName1 = "data/tristesse.wav";
-//needs to be saved int he same folder as .pde file
 String path1;
 
 String audioName2 = "data/sfx.wav";
@@ -87,16 +86,15 @@ void setup() {
 
   path1 = sketchPath(audioName1);
   music = new SoundFile(this, path1);
-  
+
   path2 = sketchPath(audioName2);
   eatDonut = new SoundFile(this, path2);
-  
+
   path3 = sketchPath(audioName3);
   victory = new SoundFile(this, path3);
-  
+
   path4 = sketchPath(audioName4);
   boo = new SoundFile (this, path4);
-  
 
   /* load images */
   donut = loadImage("donut_full.png");
@@ -349,7 +347,7 @@ void draw() {
     } else {
       image(confirm, 250, 410, 100, 40);
     }
-    
+
     if (lonely) {
       /* draw player/CPU icons */
       if (playersTurn) {
