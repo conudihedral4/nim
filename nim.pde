@@ -388,16 +388,7 @@ void draw() {
       if (lonely) {
         image(lose, 200, 185, 200, 80);
         boo.play();
-      } else if (playerOneTurn) {
-        //P1 lost so P2 won
-        image(win_p2, 200, 185, 200, 80);
-        victory.play();
-      } else {
-        //P2 lost so P1 won
-        image(win_p1, 200, 185, 200, 80);
-        victory.play();
       }
     }
 
-  }
 }
