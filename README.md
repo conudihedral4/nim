@@ -1,7 +1,9 @@
 # Nim
 A game of subtraction. Learn more about the math behind the game on [Wikipedia](https://en.wikipedia.org/wiki/Nim).  
 
-Created for [ConUHacks](https://conuhacks.io) IV from 26-27 January 2019. See our [Devpost submission](https://devpost.com/software/nim-tgqpkd).
+Created for [ConUHacks](https://conuhacks.io) IV from 26-27 January 2019. See our [Devpost submission](https://devpost.com/software/nim-tgqpkd).  
+
+We also created a browser port, which you can find at [this repository](https://github.com/conudihedral4/nim-js).
 
 ## Usage
 Open the file `nim.pde` in a Processing window and run the sketch.  
